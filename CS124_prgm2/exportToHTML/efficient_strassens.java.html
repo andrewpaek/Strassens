@@ -1,0 +1,280 @@
+<html>
+<head>
+<title>efficient_strassens.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(128,128,128); font-style: italic; }
+.s1 { color: rgb(0,0,0); }
+.s2 { color: rgb(0,0,128); font-weight: bold; }
+.s3 { color: rgb(0,0,255); }
+.s4 { color: rgb(0,128,0); font-weight: bold; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+efficient_strassens.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">/** 
+ * Created by Andrew on 3/23/2016. 
+ */</span><span class="s1"> 
+ 
+</span><span class="s2">public class </span><span class="s1">efficient_strassens { 
+    </span><span class="s2">static int</span><span class="s1">[][] input1 = </span><span class="s2">new int</span><span class="s1">[][]{ 
+            {</span><span class="s3">1</span><span class="s1">, </span><span class="s3">2</span><span class="s1">, </span><span class="s3">7</span><span class="s1">, </span><span class="s3">3</span><span class="s1">}, 
+            {</span><span class="s3">3</span><span class="s1">, </span><span class="s3">4</span><span class="s1">, </span><span class="s3">1</span><span class="s1">, </span><span class="s3">1</span><span class="s1">}, 
+            {</span><span class="s3">2</span><span class="s1">, </span><span class="s3">0</span><span class="s1">, </span><span class="s3">1</span><span class="s1">, </span><span class="s3">5</span><span class="s1">}, 
+            {</span><span class="s3">1</span><span class="s1">, </span><span class="s3">1</span><span class="s1">, </span><span class="s3">0</span><span class="s1">, </span><span class="s3">1</span><span class="s1">} 
+    }; 
+    </span><span class="s2">static int</span><span class="s1">[][] input2 = </span><span class="s2">new int</span><span class="s1">[][]{ 
+            {</span><span class="s3">7</span><span class="s1">, </span><span class="s3">1</span><span class="s1">, </span><span class="s3">10</span><span class="s1">, </span><span class="s3">0</span><span class="s1">}, 
+            {</span><span class="s3">3</span><span class="s1">, </span><span class="s3">4</span><span class="s1">, </span><span class="s3">0</span><span class="s1">, </span><span class="s3">1</span><span class="s1">}, 
+            {</span><span class="s3">2</span><span class="s1">, </span><span class="s3">0</span><span class="s1">, </span><span class="s3">0</span><span class="s1">, </span><span class="s3">1</span><span class="s1">}, 
+            {</span><span class="s3">5</span><span class="s1">, </span><span class="s3">1</span><span class="s1">, </span><span class="s3">3</span><span class="s1">, </span><span class="s3">0</span><span class="s1">} 
+    }; 
+    </span><span class="s2">public static void </span><span class="s1">main(String[] args){ 
+        matrix A = </span><span class="s2">new </span><span class="s1">matrix(); 
+        matrix B = </span><span class="s2">new </span><span class="s1">matrix(); 
+        A.row_start=</span><span class="s3">0</span><span class="s1">; 
+        A.row_end=input1.length-</span><span class="s3">1</span><span class="s1">; 
+        A.col_start=</span><span class="s3">0</span><span class="s1">; 
+        A.col_end=input1.length-</span><span class="s3">1</span><span class="s1">; 
+        A.prev=</span><span class="s3">1</span><span class="s1">; 
+        B.row_start=</span><span class="s3">0</span><span class="s1">; 
+        B.row_end=input2.length-</span><span class="s3">1</span><span class="s1">; 
+        B.col_start=</span><span class="s3">0</span><span class="s1">; 
+        B.col_end=input2.length-</span><span class="s3">1</span><span class="s1">; 
+        B.prev=</span><span class="s3">2</span><span class="s1">; 
+        matrix C = rec(A, B); 
+        printMatrix(C.mat); 
+ 
+    } 
+ 
+    </span><span class="s2">private static </span><span class="s1">matrix rec(matrix C, matrix D) { 
+ 
+        </span><span class="s2">if </span><span class="s1">((C.row_end - C.row_start)==</span><span class="s3">0</span><span class="s1">) { 
+            </span><span class="s2">int </span><span class="s1">temp1; 
+            </span><span class="s2">int </span><span class="s1">temp2; 
+            </span><span class="s2">if </span><span class="s1">(C.prev==</span><span class="s3">1</span><span class="s1">) { 
+                temp1 = input1[C.row_start][C.col_start]; 
+            } 
+            </span><span class="s2">else if </span><span class="s1">(C.prev==</span><span class="s3">2</span><span class="s1">){ 
+                temp1 = input2[C.row_start][C.col_start]; 
+            } 
+            </span><span class="s2">else </span><span class="s1">{ 
+                temp1 = C.mat[C.row_start][C.col_start]; 
+            } 
+ 
+            </span><span class="s2">if </span><span class="s1">(D.prev==</span><span class="s3">1</span><span class="s1">) { 
+                temp2 = input1[D.row_start][D.col_start]; 
+            } 
+            </span><span class="s2">else if </span><span class="s1">(D.prev==</span><span class="s3">2</span><span class="s1">){ 
+                temp2 = input2[D.row_start][D.col_start]; 
+            } 
+            </span><span class="s2">else </span><span class="s1">{ 
+                temp2 = D.mat[D.row_start][D.col_start]; 
+            } 
+ 
+            </span><span class="s2">int</span><span class="s1">[][] R = </span><span class="s2">new int</span><span class="s1">[</span><span class="s3">1</span><span class="s1">][</span><span class="s3">1</span><span class="s1">]; 
+            R[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">0</span><span class="s1">] = temp1 * temp2; 
+            matrix T = </span><span class="s2">new </span><span class="s1">matrix(); 
+            T.mat = R; 
+            </span><span class="s2">return </span><span class="s1">T; 
+ 
+        } </span><span class="s2">else </span><span class="s1">{ 
+ 
+            matrix C11 = </span><span class="s2">new </span><span class="s1">matrix(); 
+            matrix C12 = </span><span class="s2">new </span><span class="s1">matrix(); 
+            matrix C21 = </span><span class="s2">new </span><span class="s1">matrix(); 
+            matrix C22 = </span><span class="s2">new </span><span class="s1">matrix(); 
+            matrix D11 = </span><span class="s2">new </span><span class="s1">matrix(); 
+            matrix D12 = </span><span class="s2">new </span><span class="s1">matrix(); 
+            matrix D21 = </span><span class="s2">new </span><span class="s1">matrix(); 
+            matrix D22 = </span><span class="s2">new </span><span class="s1">matrix(); 
+ 
+            C11.set11(C); 
+            C12.set12(C); 
+            C21.set21(C); 
+            C22.set22(C); 
+ 
+            D11.set11(D); 
+            D12.set12(D); 
+            D21.set21(D); 
+            D22.set22(D); 
+ 
+            matrix S1 = subtract_mat(D12, D22, D); 
+            matrix S2 = add_mat(C11, C12, C); 
+            matrix S3 = add_mat(C21, C22, C); 
+            matrix S4 = subtract_mat(D21, D11, D); 
+            matrix S5 = add_mat(C11, C22, C); 
+            matrix S6 = add_mat(D11, D22, D); 
+            matrix S7 = subtract_mat(C12, C22, C); 
+            matrix S8 = add_mat(D21, D22, D); 
+            matrix S9 = subtract_mat(C11, C21, C); 
+            matrix S10 = add_mat(D11, D12, D); 
+ 
+            matrix P1 = rec(C11, S1); 
+            matrix P2 = rec(S2, D22); 
+            matrix P3 = rec(S3, D11); 
+            matrix P4 = rec(C22, S4); 
+            matrix P5 = rec(S5, S6); 
+            matrix P6 = rec(S7, S8); 
+            matrix P7 = rec(S9, S10); 
+ 
+            matrix E11 = add_two(P6, add_two(P5, subtract_two(P4, P2))); 
+            matrix E12 = add_two(P1, P2); 
+            matrix E21 = add_two(P3, P4); 
+            matrix E22 = add_two(P5, subtract_two(subtract_two(P1, P3), P7)); 
+            matrix E = concat_mat(E11, E12, E21, E22); 
+            </span><span class="s2">return </span><span class="s1">E; 
+        } 
+    } 
+ 
+    </span><span class="s2">private static </span><span class="s1">matrix add_two( matrix C, matrix D){ 
+        matrix R = </span><span class="s2">new </span><span class="s1">matrix(); 
+        R.mat = add(C.mat, D.mat); 
+        </span><span class="s2">return </span><span class="s1">R; 
+    } 
+ 
+    </span><span class="s2">private static </span><span class="s1">matrix subtract_two ( matrix C, matrix D){ 
+        matrix R = </span><span class="s2">new </span><span class="s1">matrix(); 
+        R.mat=subtract(C.mat, D.mat); 
+        </span><span class="s2">return </span><span class="s1">R; 
+    } 
+ 
+    </span><span class="s2">private static </span><span class="s1">matrix add_mat ( matrix C, matrix D, matrix P ){ 
+        </span><span class="s2">int</span><span class="s1">[][] tempA; 
+        </span><span class="s2">int</span><span class="s1">[][] tempB; 
+        </span><span class="s2">if </span><span class="s1">(P.prev==</span><span class="s3">0</span><span class="s1">) { 
+            tempA =populate(C.row_start, C.row_end, C.col_start, C.col_end, C.mat); 
+            tempB = populate(D.row_start, D.row_end, D.col_start, D.col_end, D.mat); 
+        } 
+        </span><span class="s2">else if </span><span class="s1">(P.prev==</span><span class="s3">1</span><span class="s1">) { 
+            tempA = populate(C.row_start, C.row_end, C.col_start, C.col_end, input1); 
+            tempB = populate(D.row_start, D.row_end, D.col_start, D.col_end, input1); 
+        } 
+        </span><span class="s2">else</span><span class="s1">{ 
+            tempA = populate(C.row_start, C.row_end, C.col_start, C.col_end, input2); 
+            tempB=populate(D.row_start, D.row_end, D.col_start, D.col_end, input2); 
+        } 
+        </span><span class="s2">int</span><span class="s1">[][] temp = add(tempA, tempB); 
+        matrix R = </span><span class="s2">new </span><span class="s1">matrix(); 
+        R.mat = temp; 
+        R.reset(); 
+        </span><span class="s2">return </span><span class="s1">R; 
+    } 
+ 
+    </span><span class="s2">private static </span><span class="s1">matrix subtract_mat ( matrix C, matrix D, matrix P){ 
+        </span><span class="s2">int</span><span class="s1">[][] tempA; 
+        </span><span class="s2">int</span><span class="s1">[][] tempB; 
+        </span><span class="s2">if </span><span class="s1">(P.prev==</span><span class="s3">0</span><span class="s1">) { 
+            tempA =populate(C.row_start, C.row_end, C.col_start, C.col_end, C.mat); 
+            tempB = populate(D.row_start, D.row_end, D.col_start, D.col_end, D.mat); 
+        } 
+        </span><span class="s2">else if </span><span class="s1">(P.prev==</span><span class="s3">1</span><span class="s1">) { 
+            tempA = populate(C.row_start, C.row_end, C.col_start, C.col_end, input1); 
+            tempB = populate(D.row_start, D.row_end, D.col_start, D.col_end, input1); 
+        } 
+        </span><span class="s2">else</span><span class="s1">{ 
+            tempA = populate(C.row_start, C.row_end, C.col_start, C.col_end, input2); 
+            tempB=populate(D.row_start, D.row_end, D.col_start, D.col_end, input2); 
+        } 
+        </span><span class="s2">int</span><span class="s1">[][] temp = subtract(tempA, tempB); 
+        matrix R = </span><span class="s2">new </span><span class="s1">matrix(); 
+        R.mat = temp; 
+        R.reset(); 
+        </span><span class="s2">return </span><span class="s1">R; 
+    } 
+ 
+    </span><span class="s2">private static int</span><span class="s1">[][] add ( </span><span class="s2">int</span><span class="s1">[][] A, </span><span class="s2">int</span><span class="s1">[][] B){ 
+        </span><span class="s2">int </span><span class="s1">n = A.length; 
+        </span><span class="s2">int</span><span class="s1">[][] C = </span><span class="s2">new int</span><span class="s1">[n][n]; 
+        </span><span class="s2">for </span><span class="s1">(</span><span class="s2">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i &lt; n; i++) { 
+            </span><span class="s2">for </span><span class="s1">(</span><span class="s2">int </span><span class="s1">j = </span><span class="s3">0</span><span class="s1">; j &lt; n; j++) { 
+                C[i][j] = A[i][j] + B[i][j]; 
+            } 
+        } 
+        </span><span class="s2">return </span><span class="s1">C; 
+    }; 
+ 
+ 
+ 
+    </span><span class="s2">private static int</span><span class="s1">[][] subtract ( </span><span class="s2">int</span><span class="s1">[][] A, </span><span class="s2">int</span><span class="s1">[][] B){ 
+        </span><span class="s2">int </span><span class="s1">n = A.length; 
+        </span><span class="s2">int</span><span class="s1">[][] C = </span><span class="s2">new int</span><span class="s1">[n][n]; 
+        </span><span class="s2">for </span><span class="s1">(</span><span class="s2">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i &lt; n; i++) { 
+            </span><span class="s2">for </span><span class="s1">(</span><span class="s2">int </span><span class="s1">j = </span><span class="s3">0</span><span class="s1">; j &lt; n; j++) { 
+                C[i][j] = A[i][j] - B[i][j]; 
+            } 
+        } 
+        </span><span class="s2">return </span><span class="s1">C; 
+    } 
+ 
+    </span><span class="s2">private static int</span><span class="s1">[][] populate ( </span><span class="s2">int </span><span class="s1">rstart, </span><span class="s2">int </span><span class="s1">rend, </span><span class="s2">int </span><span class="s1">cstart, </span><span class="s2">int </span><span class="s1">cend, </span><span class="s2">int</span><span class="s1">[][] M){ 
+        </span><span class="s2">int </span><span class="s1">n = rend - rstart; 
+        </span><span class="s2">int</span><span class="s1">[][] C = </span><span class="s2">new int</span><span class="s1">[n+</span><span class="s3">1</span><span class="s1">][n+</span><span class="s3">1</span><span class="s1">]; 
+        </span><span class="s2">for </span><span class="s1">(</span><span class="s2">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i &lt;n+</span><span class="s3">1</span><span class="s1">; i++) { 
+            </span><span class="s2">for </span><span class="s1">(</span><span class="s2">int </span><span class="s1">j = </span><span class="s3">0</span><span class="s1">; j &lt;n+</span><span class="s3">1</span><span class="s1">; j++) { 
+                C[i][j] = M[i + rstart][j + cstart]; 
+            } 
+        } 
+        </span><span class="s2">return </span><span class="s1">C; 
+    } 
+ 
+    </span><span class="s2">private static </span><span class="s1">matrix concat_mat(matrix C11, matrix C12, matrix C21, matrix C22){ 
+        </span><span class="s2">int</span><span class="s1">[][] temp = concat(C11.mat, C12.mat, C21.mat, C22.mat); 
+        matrix R = </span><span class="s2">new </span><span class="s1">matrix(); 
+        R.mat = temp; 
+        </span><span class="s2">return </span><span class="s1">R; 
+    } 
+ 
+    </span><span class="s2">private static int</span><span class="s1">[][] concat (</span><span class="s2">int</span><span class="s1">[][] C11, </span><span class="s2">int</span><span class="s1">[][] C12, </span><span class="s2">int</span><span class="s1">[][] C21, </span><span class="s2">int</span><span class="s1">[][] C22){ 
+        </span><span class="s2">int </span><span class="s1">n = C11.length; 
+        </span><span class="s2">int</span><span class="s1">[][] C = </span><span class="s2">new int</span><span class="s1">[</span><span class="s3">2 </span><span class="s1">* n][</span><span class="s3">2 </span><span class="s1">* n]; 
+        </span><span class="s2">for </span><span class="s1">(</span><span class="s2">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i &lt; n; i++) { 
+            </span><span class="s2">for </span><span class="s1">(</span><span class="s2">int </span><span class="s1">j = </span><span class="s3">0</span><span class="s1">; j &lt; n; j++) { 
+                C[i][j] = C11[i][j]; 
+            } 
+ 
+        } 
+        </span><span class="s2">for </span><span class="s1">(</span><span class="s2">int </span><span class="s1">i = n; i &lt; </span><span class="s3">2 </span><span class="s1">* n; i++) { 
+            </span><span class="s2">for </span><span class="s1">(</span><span class="s2">int </span><span class="s1">j = </span><span class="s3">0</span><span class="s1">; j &lt; n; j++) { 
+                C[i][j] = C21[i - n][j]; 
+ 
+            } 
+ 
+        } 
+ 
+        </span><span class="s2">for </span><span class="s1">(</span><span class="s2">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i &lt; n; i++) { 
+            </span><span class="s2">for </span><span class="s1">(</span><span class="s2">int </span><span class="s1">j = n; j &lt; </span><span class="s3">2 </span><span class="s1">* n; j++) { 
+                C[i][j] = C12[i][j - n]; 
+            } 
+        } 
+ 
+        </span><span class="s2">for </span><span class="s1">(</span><span class="s2">int </span><span class="s1">i = n; i &lt; </span><span class="s3">2 </span><span class="s1">* n; i++) { 
+            </span><span class="s2">for </span><span class="s1">(</span><span class="s2">int </span><span class="s1">j = n; j &lt; </span><span class="s3">2 </span><span class="s1">* n; j++) { 
+                C[i][j] = C22[i - n][j - n]; 
+ 
+            } 
+ 
+        } 
+        </span><span class="s2">return </span><span class="s1">C; 
+ 
+ 
+    } 
+    </span><span class="s2">public static void </span><span class="s1">printMatrix(</span><span class="s2">int </span><span class="s1">[][] M) { 
+        </span><span class="s2">int </span><span class="s1">n = M.length; 
+        </span><span class="s2">for </span><span class="s1">(</span><span class="s2">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i &lt; n; i++) { 
+            </span><span class="s2">for </span><span class="s1">(</span><span class="s2">int </span><span class="s1">j = </span><span class="s3">0</span><span class="s1">; j &lt; n; j++) { 
+                System.out.print(M[i][j] + </span><span class="s4">&quot; &quot;</span><span class="s1">); 
+            } 
+            System.out.print(</span><span class="s4">&quot;</span><span class="s2">\n</span><span class="s4">&quot;</span><span class="s1">); 
+        } 
+    } 
+} 
+</span></pre>
+</body>
+</html>
